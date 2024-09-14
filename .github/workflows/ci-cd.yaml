@@ -57,4 +57,4 @@ jobs:
 
     - name: Verify Flask app output
       run: |
-        curl -s ${{ env.SERVICE_URL }}
+        curl ${{ env.SERVICE_URL }}
