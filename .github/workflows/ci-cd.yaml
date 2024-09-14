@@ -41,6 +41,9 @@ jobs:
       run: |
         kubectl apply -f k8s/deployment.yaml
         kubectl apply -f k8s/service.yaml
+        sleep(2)
+        kubectl describe pod
+
 
     - name: Wait for Flask app deployment
       run: |
