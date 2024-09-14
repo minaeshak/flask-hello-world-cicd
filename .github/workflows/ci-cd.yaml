@@ -33,6 +33,8 @@ jobs:
         eval $(minikube docker-env)
         COMMIT_HASH=$(git rev-parse --short HEAD)
         docker build -t flask-hello-world:${COMMIT_HASH} .
+        docker images
+
 
     - name: Docker Login
       uses: docker/login-action@v3
