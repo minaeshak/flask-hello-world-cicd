@@ -1,4 +1,4 @@
-name: Minikube Deployment
+name: Flask App CI/CD
 
 on:
   push:
@@ -57,4 +57,8 @@ jobs:
 
     - name: Verify Flask app output
       run: |
-        curl ${{ env.SERVICE_URL }}
+        curl -v ${{ env.SERVICE_URL }}
+        if [ $? -ne 0 ]; then
+          echo "Flask app is not reachable."
+          exit 1
+        fi
