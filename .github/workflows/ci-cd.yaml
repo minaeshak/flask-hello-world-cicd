@@ -57,8 +57,4 @@ jobs:
 
     - name: Verify Flask app output
       run: |
-        curl -s ${{ env.SERVICE_URLwqie }}
-        if [ $? -ne 0 ]; then
-          echo "Flask app is not reachable."
-          exit 1  # Fail the job if the service is not reachable
-        fi
+        curl -s ${{ env.SERVICE_URL }}
