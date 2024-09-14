@@ -1,0 +1,47 @@
+name: Minikube Deployment
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Minikube
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y conntrack socat
+        curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+        sudo install minikube /usr/local/bin/
+
+    - name: Start Minikube
+      run: |
+        minikube start --driver=docker
+        minikube status
+
+    - name: Build Docker image
+      run: |
+        eval $(minikube docker-env)
+        docker build -t flask-hello-world .
+
+    - name: Create Kubernetes Deployment
+      run: |
+        kubectl create deployment flask-app --image=flask-hello-world
+        kubectl expose deployment flask-app --type=NodePort --port=5000
+
+    - name: Wait for Flask app deployment
+      run: |
+        kubectl rollout status deployment/flask-app
+
+    - name: Get service URL
+      run: |
+        minikube service flask-app --url
