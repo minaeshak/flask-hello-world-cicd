@@ -31,23 +31,25 @@ jobs:
     - name: Build Docker image
       run: |
         eval $(minikube docker-env)
-        docker build -t flask-hello-world .
+        COMMIT_HASH=$(git rev-parse --short HEAD)
+        docker build -t flask-hello-world:${COMMIT_HASH} .
 
     - name: Docker Login
       uses: docker/login-action@v3
       with:
-        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        username: minaeshak
         password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
     - name: Push Docker image
       run: |
-        docker tag flask-hello-world ${{ secrets.DOCKER_HUB_USERNAME }}/flask-hello-world:latest
-        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/flask-hello-world:latest
+        COMMIT_HASH=$(git rev-parse --short HEAD)
+        docker tag flask-hello-world:${COMMIT_HASH} minaeshak/flask-hello-world:${COMMIT_HASH}
+        docker push minaeshak/flask-hello-world:${COMMIT_HASH}
 
-    - name: Create Kubernetes Deployment
+    - name: Apply Kubernetes manifests
       run: |
-        kubectl create deployment flask-app --image=minaeshak/flask-hello-world
-        kubectl expose deployment flask-app --type=NodePort --port=5000
+        kubectl apply -f k8s/deployment.yaml
+        kubectl apply -f k8s/service.yaml
 
     - name: Wait for Flask app deployment
       run: |
