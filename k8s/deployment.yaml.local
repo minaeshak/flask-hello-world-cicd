@@ -17,9 +17,6 @@ spec:
         image: minaeshak/flask-hello-world
         ports:
         - containerPort: 5000
-        securityContext:
-          runAsNonRoot: true
-          allowPrivilegeEscalation: false
   strategy:
       type: RollingUpdate
       rollingUpdate:
