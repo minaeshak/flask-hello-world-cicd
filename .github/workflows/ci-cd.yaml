@@ -44,7 +44,6 @@ jobs:
 
     - name: Push Docker image
       run: |
-        COMMIT_HASH=$(git rev-parse --short HEAD)
         docker tag flask-hello-world:${COMMIT_HASH} minaeshak/flask-hello-world:${COMMIT_HASH}
         docker push minaeshak/flask-hello-world:${COMMIT_HASH}
 
