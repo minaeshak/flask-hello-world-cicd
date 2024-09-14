@@ -32,9 +32,7 @@ jobs:
       run: |
         eval $(minikube docker-env)
         COMMIT_HASH=$(git rev-parse --short HEAD)
-        docker build -t flask-hello-world:${COMMIT_HASH} .
-        docker images
-
+        docker build -t flask-hello-world .
 
     - name: Docker Login
       uses: docker/login-action@v3
@@ -44,7 +42,8 @@ jobs:
 
     - name: Push Docker image
       run: |
-        docker tag flask-hello-world:${COMMIT_HASH} minaeshak/flask-hello-world:${COMMIT_HASH}
+        COMMIT_HASH=$(git rev-parse --short HEAD)
+        docker tag flask-hello-world minaeshak/flask-hello-world:${COMMIT_HASH}
         docker push minaeshak/flask-hello-world:${COMMIT_HASH}
 
     - name: Apply Kubernetes manifests
