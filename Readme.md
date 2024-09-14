@@ -11,7 +11,6 @@ This project demonstrates a CI/CD pipeline for deploying a simple Flask web appl
 - [Docker](https://docs.docker.com/get-docker/)
 - [Minikube](https://minikube.sigs.k8s.io/docs/start/)
 - [kubectl](https://kubernetes.io/docs/tasks/tools/)
-- [GitHub Actions](https://docs.github.com/en/actions/learn-github-actions/understanding-github-actions)
 
 ### Project Structure
 
