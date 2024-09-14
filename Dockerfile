@@ -1,3 +1,5 @@
+# Alpine base image for minimizing image size
+
 FROM python:3.10-alpine
 
 WORKDIR /app
