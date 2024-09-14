@@ -78,7 +78,7 @@ The CI/CD pipeline for this project is configured using GitHub Actions and follo
 
 ### High Availability
 
-- **Multiple Replicas in Kubernetes**: Deployed the Flask application with at least 3 replicas to ensure high availability.
+- **Multiple Replicas in Kubernetes**: Deployed the Flask application with at least 3 replicas to ensure high availability and `maxUnavailable` set to 2 to ensure 2 pods running. 
 - **Rolling Updates**: Used Kubernetes rolling updates for zero-downtime deployments.
 
 ### Image Optimization
