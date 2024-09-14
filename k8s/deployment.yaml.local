@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: flask-app
-        image: minaeshak/flask-hello-world:${IMAGE_TAG}
+        image: minaeshak/flask-hello-world
         ports:
         - containerPort: 5000
         securityContext:
