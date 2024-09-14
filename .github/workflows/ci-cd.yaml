@@ -46,7 +46,7 @@ jobs:
 
     - name: Create Kubernetes Deployment
       run: |
-        kubectl create deployment flask-app --image=flask-hello-world
+        kubectl create deployment flask-app --image=minaeshak/flask-hello-world
         kubectl expose deployment flask-app --type=NodePort --port=5000
 
     - name: Wait for Flask app deployment
@@ -54,5 +54,11 @@ jobs:
         kubectl rollout status deployment/flask-app
 
     - name: Get service URL
+      id: get-url
       run: |
-        minikube service flask-app --url
+        SERVICE_URL=$(minikube service flask-app --url)
+        echo "SERVICE_URL=${SERVICE_URL}" >> $GITHUB_ENV
+
+    - name: Verify Flask app output
+      run: |
+        curl -s ${{ env.SERVICE_URL }} | grep "Hello, World!"
