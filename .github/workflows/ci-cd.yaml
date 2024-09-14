@@ -39,10 +39,10 @@ jobs:
 
     - name: Apply Kubernetes manifests
       run: |
-        kubectl apply -f k8s/deployment.yaml
-        kubectl apply -f k8s/service.yaml
-        sleep 2
-        kubectl describe pod
+        IMAGE_TAG=${{ github.sha }}
+        export IMAGE_TAG
+        envsubst < k8s/deployment.yaml | kubectl apply -f -
+        envsubst < k8s/service.yaml | kubectl apply -f -
 
 
     - name: Wait for Flask app deployment
